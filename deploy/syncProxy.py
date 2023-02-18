@@ -15,8 +15,8 @@ apigee_organization=os.environ.get("APIGEE_ORGANIZATION")
 apigee_environment=os.environ.get("APIGEE_ENVIRONMENT")
 bundles_path=os.environ.get('LBX_APIGEE_TOOLS_BUNDLES_PATH', "./bundles");
 apigee_cli_creds=f"-u {apigee_user} -p {apigee_password} -o {apigee_organization}"
-proxy_name=get_env_var("PROXY_NAME")
-proxy_revision=get_env_var("PROXY_REVISION")
+proxy_name=os.environ.get("PROXY_NAME")
+proxy_revision=os.environ.get("PROXY_REVISION")
 
 def sync():
 
