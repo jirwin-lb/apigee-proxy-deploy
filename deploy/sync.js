@@ -31,14 +31,13 @@ function sync() {
     if (matches.length === 0) {
         console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
     }
-    const filePath = path.join(directoryPath, proxyName,'.zip');
 
     fs.mkdir(directoryPath, { recursive: true }, (error) => {
         if (error) {
           console.error(`Error creating directory: ${error}`);
           return;
         }
-        fs.writeFile(filePath, proxyZip, (error) => {
+        fs.writeFile(proxyName+'.zip', proxyZip, (error) => {
           if (error) {
             console.error(`Error writing file: ${error}`);
             return;
