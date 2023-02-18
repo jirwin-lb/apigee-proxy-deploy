@@ -25,7 +25,7 @@ function sync() {
     console.log(contents);
     const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
     const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-
+    const fileName = proxyName+'.zip';
     const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`)
     // console.log(liveDeployments.deployments)
     if (matches.length === 0) {
@@ -37,7 +37,7 @@ function sync() {
           console.error(`Error creating directory: ${error}`);
           return;
         }
-        fs.writeFile(proxyName+'.zip', proxyZip, (error) => {
+        fs.writeFile(fileName, proxyZip, (error) => {
           if (error) {
             console.error(`Error writing file: ${error}`);
             return;
