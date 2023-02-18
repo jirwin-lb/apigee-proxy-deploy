@@ -18,7 +18,7 @@ function sync() {
   console.log(apigeeUser);
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-
+console.log(liveDeployments.deployments)
   if (matches.length === 0) {
     console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
   }
