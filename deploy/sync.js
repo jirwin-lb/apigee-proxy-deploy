@@ -16,7 +16,8 @@ function run(cmd) {
 }
 
 function sync() {
-    console.log(apigeeUser);
+    // console.log(apigeeUser);
+    console.log("About to make directory");
     fs.mkdir(path.join('./proxies/', proxyName), (err) => {
         if (err) {
             return console.error(err);
@@ -25,7 +26,7 @@ function sync() {
     });
     const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
     const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-    console.log(liveDeployments.deployments)
+    // console.log(liveDeployments.deployments)
     if (matches.length === 0) {
         console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
     }
