@@ -18,7 +18,7 @@ apigee_cli_creds=f"-u {apigee_user} -p {apigee_password} -o {apigee_organization
 proxy_name=get_env_var("PROXY_NAME")
 proxy_revision=get_env_var("PROXY_REVISION")
 
-def sync();
+def sync():
 
     live_deployments = json.loads(run(f"apigeetool listdeployments {apigee_cli_creds} -e {apigee_environment} -j").read())
     matches = list(cdict for cdict in live_deployments["deployments"] if cdict["name"] == name)
@@ -26,5 +26,5 @@ def sync();
     if len(matches) == 0:
         typer.echo(f"ERROR: No proxy by name {name} currently deployed to environment {apigee_environment}")
 
-print("Hello World")
-print(os.environ.get("PROXY_NAME"))
+    print("Hello World")
+    print(os.environ.get("PROXY_NAME"))
