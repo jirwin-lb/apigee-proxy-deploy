@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const { readFileSync } = require('fs');
+const { fs } = require('fs');
 
 const apigeeUser = process.env.APIGEE_USER;
 const apigeePassword = process.env.APIGEE_PASSWORD;
