@@ -10,6 +10,7 @@ const bundlesPath = process.env.LBX_APIGEE_TOOLS_BUNDLES_PATH || './bundles';
 const apigeeCliCreds = `-u ${apigeeUser} -p ${apigeePassword} -o ${apigeeOrganization}`;
 const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
+const directoryPath = './terraform/proxy/' + proxyName;
 
 function run(cmd) {
     return execSync(cmd, { encoding: 'utf8' });
@@ -24,11 +25,27 @@ function sync() {
     console.log(contents);
     const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
     const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
+
+    const proxyZip = JSON.parse(run(`apigeetool fetchproxy ${apigeeCreds} -n ${proxyName} -r ${proxyRevision}`))
     // console.log(liveDeployments.deployments)
     if (matches.length === 0) {
         console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
     }
+    const filePath = path.join(directoryPath, proxyName,'.zip');
 
+    fs.mkdir(directoryPath, { recursive: true }, (error) => {
+        if (error) {
+          console.error(`Error creating directory: ${error}`);
+          return;
+        }
+        fs.writeFile(filePath, proxyZip, (error) => {
+          if (error) {
+            console.error(`Error writing file: ${error}`);
+            return;
+          }
+          console.log(`File ${fileName} written to ${directoryPath}`);
+        });
+      });
     console.log('Hello World');
     console.log(process.env.PROXY_NAME);
 }
