@@ -10,7 +10,7 @@ const bundlesPath = process.env.LBX_APIGEE_TOOLS_BUNDLES_PATH || './bundles';
 const apigeeCliCreds = `-u ${apigeeUser} -p ${apigeePassword} -o ${apigeeOrganization}`;
 const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
-const directoryPath = './terraform/proxy/' + proxyName;
+const directoryPath = './terraform/proxy/';
 
 function run(cmd) {
     return execSync(cmd, { encoding: 'utf8' });
