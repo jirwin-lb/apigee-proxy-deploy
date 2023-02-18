@@ -11,21 +11,26 @@ const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
 
 function run(cmd) {
-  return execSync(cmd, { encoding: 'utf8' });
+    return execSync(cmd, { encoding: 'utf8' });
 }
 
 function sync() {
-  console.log(apigeeUser);
-  fs.mkdirSync('./proxies/'+{proxyName})
-  const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
-  const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-console.log(liveDeployments.deployments)
-  if (matches.length === 0) {
-    console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
-  }
+    console.log(apigeeUser);
+    fs.mkdir(path.join('./proxies/', proxyName), (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        console.log('Directory created successfully!');
+    });
+    const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
+    const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
+    console.log(liveDeployments.deployments)
+    if (matches.length === 0) {
+        console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
+    }
 
-  console.log('Hello World');
-  console.log(process.env.PROXY_NAME);
+    console.log('Hello World');
+    console.log(process.env.PROXY_NAME);
 }
 
 sync();
