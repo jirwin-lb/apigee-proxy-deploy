@@ -18,12 +18,8 @@ function run(cmd) {
 function sync() {
     // console.log(apigeeUser);
     console.log("About to make directory");
-    fs.mkdir(path.join('./proxies/', proxyName), (err) => {
-        if (err) {
-            return console.error(err);
-        }
-        console.log('Directory created successfully!');
-    });
+    let contents = fs.readFileSync('./example.txt', 'utf-8')
+    console.log(contents);
     const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
     const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
     // console.log(liveDeployments.deployments)
