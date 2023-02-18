@@ -1,5 +1,6 @@
 const { execSync } = require('child_process');
-const { fs } = require('fs');
+const fs = require('fs');
+const path = require('path');
 
 const apigeeUser = process.env.APIGEE_USER;
 const apigeePassword = process.env.APIGEE_PASSWORD;
