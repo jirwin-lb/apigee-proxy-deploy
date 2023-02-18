@@ -15,6 +15,7 @@ function run(cmd) {
 }
 
 function sync() {
+  console.log(apigeeUser);
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
 
