@@ -21,7 +21,6 @@ function sync() {
     console.log("About to make directory");
     let contents = fs.readFileSync('./example.txt', 'utf-8')
     
-    console.log(files);
     console.log(contents);
     const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
     const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
