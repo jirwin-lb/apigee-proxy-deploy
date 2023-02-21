@@ -43,12 +43,13 @@ function sync() {
     }
   });
 
-  fs.writeFile(terraform_file_path, "",(error) => {
+  fs.writeFile(terraform_file_path, "hello",(error) => {
     if (error) {
       console.error(`Error writing file: ${error}`);
       return;
     }
   });
+
   const f = fs.openSync(terraform_file_path, 'w');
   fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
   fs.writeSync(f, `  name = "${proxyName}"\n`);
