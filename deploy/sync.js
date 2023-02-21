@@ -49,8 +49,7 @@ function sync() {
       return;
     }
   });
-
-  fs.openSync(terraform_file_path, 'w');
+  const f = fs.openSync(terraform_file_path, 'w');
   fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
   fs.writeSync(f, `  name = "${proxyName}"\n`);
   fs.writeSync(f, `  bundle = "${fileName}"\n`);
