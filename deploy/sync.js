@@ -53,7 +53,7 @@ function sync() {
   const f = fs.openSync(terraform_file_path, 'w');
   fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
   fs.writeSync(f, `  name = "${proxyName}"\n`);
-  fs.writeSync(f, `  bundle = "${fileName}"\n`);
+  fs.writeSync(f, `  bundle = "./${fileName}+.zip"\n`);
   fs.writeSync(f, `  bundle_hash = "${bundle_hash}"\n`);
   fs.writeSync(f, `}\n`);
   fs.writeSync(f, `\n`);
