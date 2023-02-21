@@ -35,7 +35,7 @@ function sync() {
     const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
     const options = {shell: true};
 
-    const download = exec(command, options);
+    const download = execSync(command, options);
 
     download.on('exit', (code) => {
       console.log(`Command exited with code ${code}`);
