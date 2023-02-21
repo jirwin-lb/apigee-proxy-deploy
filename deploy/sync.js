@@ -31,21 +31,21 @@ function sync() {
     }
     var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
     // console.log(liveDeployments.deployments)
-   
-    console.log(proxyZip)
-    fs.mkdir(directoryPath, { recursive: true }, (error) => {
-        if (error) {
-          console.error(`Error creating directory: ${error}`);
-          return;
-        }
-        fs.writeFile(fileName, proxyZip, (error) => {
-          if (error) {
-            console.error(`Error writing file: ${error}`);
-            return;
-          }
-          console.log(`File ${fileName} written to ${directoryPath}`);
-        });
-      });
+    fs.writeFile(fileName, proxyZip, (error) => {
+      if (error) {
+        console.error(`Error writing file: ${error}`);
+        return;
+      }
+      console.log(`File ${fileName} written to ${directoryPath}`);
+    });
+    // console.log(proxyZip)
+    // fs.mkdir(directoryPath, { recursive: true }, (error) => {
+    //     if (error) {
+    //       console.error(`Error creating directory: ${error}`);
+    //       return;
+    //     }
+        
+    //   });
     console.log('Hello World');
     console.log(process.env.PROXY_NAME);
 }
