@@ -15,7 +15,6 @@ const bundlesPath = process.env.LBX_APIGEE_TOOLS_BUNDLES_PATH || './bundles';
 const apigeeCliCreds = `-u ${apigeeUser} -p ${apigeePassword} -o ${apigeeOrganization}`;
 const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
-const proxyDirectryPath = './apigee/proxy';
 
 function run(cmd) {
   return execSync(cmd, { encoding: 'utf8' });
@@ -30,7 +29,7 @@ function sync() {
   console.log(contents);
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-  const fileName = proxyDirectryPath+proxyName;
+  const fileName = proxyName;
   if (matches.length === 0) {
     console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
   }
