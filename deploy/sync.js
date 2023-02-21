@@ -15,7 +15,7 @@ const proxyRevision = process.env.PROXY_REVISION;
 const directoryPath = './terraform/proxy';
 
 function run(cmd) {
-  return execSync(cmd, { encoding: 'utf8' });
+  return exec(cmd, { encoding: 'utf8' });
 }
 
 function sync() {
