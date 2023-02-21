@@ -7,7 +7,6 @@ const util = require("util");
 const { exec } = require("child_process");
 const { execSync } = require("child_process");
 const execProm = util.promisify(exec);
-const fs = require('fs');
 const zlib = require('zlib');
 
 
