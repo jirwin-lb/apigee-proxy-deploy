@@ -40,7 +40,7 @@ function sync() {
 
 
 
-  async function run_proxy_sync_command(command, callback) {
+  async function run_proxy_sync_command(command) {
     let result;
     try {
       result = await execProm(command);
