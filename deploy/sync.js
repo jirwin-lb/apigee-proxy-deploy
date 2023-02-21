@@ -54,7 +54,7 @@ function sync() {
   }
 
 
-  run_proxy_sync_command(command).then(res => fs.writeFile(fileName,res));
+  run_proxy_sync_command(command).then(res => fs.writeFileSync(fileName,res));
 
   // console.log(liveDeployments.deployments)
   // fs.writeFile(fileName, download, (error) => {
