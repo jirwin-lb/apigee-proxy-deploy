@@ -34,7 +34,7 @@ function sync() {
   if (matches.length === 0) {
     console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
   }
-  //var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+  var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
 
 
   // const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
@@ -64,37 +64,30 @@ function sync() {
 
   
 
-const directoryFiles = fs.readdirSync('./');
+// const directoryFiles = fs.readdirSync('./');
 
-Promise.all(directoryFiles.map(fileName => {
-  return new Promise((resolve, reject) => {
-    //const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
-    const fileContents = fs.createReadStream(run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`));
-    const writeStream = fs.createWriteStream(fileName);
-    const zip = zlib.createGzip();
-    fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
-      if (err) return reject(err);
-      else resolve();
-    })
-  })
-}))
-  .then(console.log('done'));
+// Promise.all(directoryFiles.map(fileName => {
+//   return new Promise((resolve, reject) => {
+//     //const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+//     const fileContents = fs.createReadStream(run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`));
+//     const writeStream = fs.createWriteStream(fileName);
+//     const zip = zlib.createGzip();
+//     fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
+//       if (err) return reject(err);
+//       else resolve();
+//     })
+//   })
+// }))
+//   .then(console.log('done'));
 
-  // console.log(liveDeployments.deployments)
-  // fs.writeFile(fileName, download, (error) => {
-  //   if (error) {
-  //     console.error(`Error writing file: ${error}`);
-  //     return;
-  //   }
-  // });
-  // console.log(proxyZip)
-  // fs.mkdir(directoryPath, { recursive: true }, (error) => {
-  //     if (error) {
-  //       console.error(`Error creating directory: ${error}`);
-  //       return;
-  //     }
-
-  //   });
+  console.log(liveDeployments.deployments)
+  fs.writeFile(fileName, proxyZip, (error) => {
+    if (error) {
+      console.error(`Error writing file: ${error}`);
+      return;
+    }
+  });
+  console.log(proxyZip)
 }
 
 sync();
