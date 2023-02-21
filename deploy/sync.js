@@ -35,15 +35,16 @@ function sync() {
     const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
     const options = {shell: true};
 
-    const download = execSync(command, options);
+    const download = execSync(command, options, (error, stdout, stderr) => {
+      if (error) {
+        console.error(`exec error: ${error}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
 
-    download.on('exit', (code) => {
-      console.log(`Command exited with code ${code}`);
     });
 
-    download.on('error', (err) => {
-      console.error(`Command execution failed: ${err}`);
-    });
     // console.log(liveDeployments.deployments)
     fs.writeFile(fileName, download, (error) => {
       if (error) {
