@@ -32,7 +32,7 @@ function sync() {
     //var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
 
 
-    const command = `apigeetool fetchproxy ${apigee_cli_creds} -n ${name} -r ${revision}`;
+    const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
     const options = {shell: true};
 
     const download = exec(command, options);
