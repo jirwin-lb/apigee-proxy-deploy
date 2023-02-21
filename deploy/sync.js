@@ -68,8 +68,8 @@ const directoryFiles = fs.readdirSync('./');
 
 Promise.all(directoryFiles.map(fileName => {
   return new Promise((resolve, reject) => {
-    const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
-    const fileContents = fs.createReadStream(proxyZip);
+    //const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+    const fileContents = fs.createReadStream(run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`));
     const writeStream = fs.createWriteStream(fileName);
     const zip = zlib.createGzip();
     fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
