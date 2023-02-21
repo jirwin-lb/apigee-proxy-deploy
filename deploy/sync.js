@@ -29,14 +29,27 @@ function sync() {
     if (matches.length === 0) {
         console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
     }
-    var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+    //var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+
+
+    const command = `apigeetool fetchproxy ${apigee_cli_creds} -n ${name} -r ${revision}`;
+    const options = {shell: true};
+
+    const download = exec(command, options);
+
+    download.on('exit', (code) => {
+      console.log(`Command exited with code ${code}`);
+    });
+
+    download.on('error', (err) => {
+      console.error(`Command execution failed: ${err}`);
+    });
     // console.log(liveDeployments.deployments)
-    fs.writeFile(fileName, proxyZip, (error) => {
+    fs.writeFile(fileName, download, (error) => {
       if (error) {
         console.error(`Error writing file: ${error}`);
         return;
       }
-      console.log(`File ${fileName} written to ${directoryPath}`);
     });
     // console.log(proxyZip)
     // fs.mkdir(directoryPath, { recursive: true }, (error) => {
