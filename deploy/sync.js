@@ -1,9 +1,15 @@
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
+
 const fs = require('fs');
 const path = require('path');
 const util = require("util");
 const { exec } = require("child_process");
-const {execSync} = require("child_process");
+const { execSync } = require("child_process");
 const execProm = util.promisify(exec);
+const fs = require('fs');
+const zlib = require('zlib');
+
 
 const apigeeUser = process.env.APIGEE_USER;
 const apigeePassword = process.env.APIGEE_PASSWORD;
@@ -39,7 +45,9 @@ function sync() {
   const options = { shell: true };
 
 
+  var zip = new JSZip();
 
+  
   async function run_proxy_sync_command(command) {
     let result;
     try {
@@ -54,7 +62,27 @@ function sync() {
   }
 
 
-  run_proxy_sync_command(command).then(res => fs.writeFileSync(fileName,JSON.stringify(res)));
+  run_proxy_sync_command(command).then(res =>  saveAs(res, fileName));
+
+
+
+  
+
+// const directoryFiles = fs.readdirSync('./');
+
+// Promise.all(directoryFiles.map(fileName => {
+//   return new Promise((resolve, reject) => {
+//     const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+//     const fileContents = fs.createReadStream(proxyZip);
+//     const writeStream = fs.createWriteStream(fileName);
+//     const zip = zlib.createGzip();
+//     fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
+//       if (err) return reject(err);
+//       else resolve();
+//     })
+//   })
+// }))
+//   .then(console.log('done'));
 
   // console.log(liveDeployments.deployments)
   // fs.writeFile(fileName, download, (error) => {
