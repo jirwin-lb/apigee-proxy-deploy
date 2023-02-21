@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require("util");
 const { exec } = require("child_process");
+const {execSync} = require("child_process");
 const execProm = util.promisify(exec);
 
 const apigeeUser = process.env.APIGEE_USER;
@@ -15,7 +16,7 @@ const proxyRevision = process.env.PROXY_REVISION;
 const directoryPath = './terraform/proxy';
 
 function run(cmd) {
-  return exec(cmd, { encoding: 'utf8' });
+  return execSync(cmd, { encoding: 'utf8' });
 }
 
 function sync() {
