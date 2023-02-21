@@ -43,7 +43,7 @@ function sync() {
     }
   });
 
-  fs.writeFile(terraform_file_path, "hello",(error) => {
+  fs.writeFile(terraform_file_path, "",(error) => {
     if (error) {
       console.error(`Error writing file: ${error}`);
       return;
