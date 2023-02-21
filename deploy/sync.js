@@ -40,7 +40,7 @@ function sync() {
 
 
 
-  async function run_proxy_sync_command(command) {
+  async function run_proxy_sync_command(command, callback) {
     let result;
     try {
       result = await execProm(command);
@@ -54,7 +54,7 @@ function sync() {
   }
 
 
-  run_proxy_sync_command(command).then(res => fs.writeFile(fileName, res));
+  run_proxy_sync_command(command).then(res => console.log(res));
 
   // console.log(liveDeployments.deployments)
   // fs.writeFile(fileName, download, (error) => {
