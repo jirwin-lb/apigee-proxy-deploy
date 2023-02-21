@@ -1,6 +1,6 @@
 // import JSZip from "jszip";
-// import { saveAs } from "file-saver";
-const {saveAs} = require('file-saver');
+import { saveAs } from "file-saver";
+//const { saveAs } = require('file-saver');
 const fs = require('fs');
 const path = require('path');
 const util = require("util");
