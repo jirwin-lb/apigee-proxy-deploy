@@ -30,7 +30,7 @@ function sync() {
   console.log(contents);
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
-  const fileName = proxyName + '.zip';
+  const fileName = proxyName;
   if (matches.length === 0) {
     console.log(`ERROR: No proxy by name ${proxyName} currently deployed to environment ${apigeeEnvironment}`);
   }
