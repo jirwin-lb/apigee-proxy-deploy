@@ -32,10 +32,10 @@ function sync() {
     //var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
 
 
-    const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
+    const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision} --output ${fileName}`;
     const options = {shell: true};
 
-    const download = execSync(command, options, (error, stdout, stderr) => {
+    execSync(command, options, (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
         return;
@@ -46,12 +46,12 @@ function sync() {
     });
 
     // console.log(liveDeployments.deployments)
-    fs.writeFile(fileName, download, (error) => {
-      if (error) {
-        console.error(`Error writing file: ${error}`);
-        return;
-      }
-    });
+    // fs.writeFile(fileName, download, (error) => {
+    //   if (error) {
+    //     console.error(`Error writing file: ${error}`);
+    //     return;
+    //   }
+    // });
     // console.log(proxyZip)
     // fs.mkdir(directoryPath, { recursive: true }, (error) => {
     //     if (error) {
@@ -60,8 +60,6 @@ function sync() {
     //     }
         
     //   });
-    console.log('Hello World');
-    console.log(process.env.PROXY_NAME);
 }
 
 sync();
