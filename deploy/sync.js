@@ -21,12 +21,7 @@ function run(cmd) {
 }
 
 function sync() {
-  // console.log(apigeeUser);
-  console.log("About to make directory");
-  let contents = fs.readFileSync('./example.txt', 'utf-8')
-  var files = fs.readdirSync('./terraform/proxy')
-  console.log(files);
-  console.log(contents);
+  
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
   const fileName = proxyName;
