@@ -1,6 +1,3 @@
-// import JSZip from "jszip";
-import { saveAs } from "file-saver";
-//const { saveAs } = require('file-saver');
 const fs = require('fs');
 const path = require('path');
 const util = require("util");
@@ -40,48 +37,48 @@ function sync() {
   //var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
 
 
-  const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
-  const options = { shell: true };
+  // const command = `apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`;
+  // const options = { shell: true };
 
 
-  var zip = new JSZip();
-
-  
-  async function run_proxy_sync_command(command) {
-    let result;
-    try {
-      result = await execProm(command);
-    } catch (ex) {
-      result = ex;
-    }
-    if (Error[Symbol.hasInstance](result))
-      return;
-
-    return result;
-  }
-
-
-  run_proxy_sync_command(command).then(res =>  saveAs(res, fileName));
-
-
+  // var zip = new JSZip();
 
   
+  // async function run_proxy_sync_command(command) {
+  //   let result;
+  //   try {
+  //     result = await execProm(command);
+  //   } catch (ex) {
+  //     result = ex;
+  //   }
+  //   if (Error[Symbol.hasInstance](result))
+  //     return;
 
-// const directoryFiles = fs.readdirSync('./');
+  //   return result;
+  // }
 
-// Promise.all(directoryFiles.map(fileName => {
-//   return new Promise((resolve, reject) => {
-//     const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
-//     const fileContents = fs.createReadStream(proxyZip);
-//     const writeStream = fs.createWriteStream(fileName);
-//     const zip = zlib.createGzip();
-//     fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
-//       if (err) return reject(err);
-//       else resolve();
-//     })
-//   })
-// }))
-//   .then(console.log('done'));
+
+  // run_proxy_sync_command(command).then(res =>  saveAs(res, fileName));
+
+
+
+  
+
+const directoryFiles = fs.readdirSync('./');
+
+Promise.all(directoryFiles.map(fileName => {
+  return new Promise((resolve, reject) => {
+    const proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
+    const fileContents = fs.createReadStream(proxyZip);
+    const writeStream = fs.createWriteStream(fileName);
+    const zip = zlib.createGzip();
+    fileContents.pipe(zip).pipe(writeStream).on('finish', (err) => {
+      if (err) return reject(err);
+      else resolve();
+    })
+  })
+}))
+  .then(console.log('done'));
 
   // console.log(liveDeployments.deployments)
   // fs.writeFile(fileName, download, (error) => {
