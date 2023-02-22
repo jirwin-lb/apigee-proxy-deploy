@@ -66,12 +66,7 @@ function sync() {
       console.error(`Error creating directory: ${error}`);
       return;
     }
-    fs.writeFile(directoryPath+'/'+fileName, proxyZip, (error) => {
-      if (error) {
-        console.error(`Error writing file: ${error}`);
-        return;
-      }
-    });
+    
     fs.writeFile(directoryPath+'/'+terraform_file_path, "", (error) => {
       if (error) {
         console.error(`Error writing file: ${error}`);
@@ -92,6 +87,13 @@ function sync() {
     fs.writeSync(f, `}\n`);
     fs.closeSync(f);
 
+  });
+
+  fs.writeFile(directoryPath+'/'+fileName, proxyZip, (error) => {
+    if (error) {
+      console.error(`Error writing file: ${error}`);
+      return;
+    }
   });
 
 }
