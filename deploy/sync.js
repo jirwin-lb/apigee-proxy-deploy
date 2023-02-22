@@ -16,12 +16,13 @@ const apigeeCliCreds = `-u ${apigeeUser} -p ${apigeePassword} -o ${apigeeOrganiz
 const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
 const terraform_file_path = proxyName + '.tf';
+const directoryPath = "./terraform"
 function run(cmd) {
   return execSync(cmd, { encoding: 'utf8' });
 }
 
 function sync() {
-  
+
   const liveDeployments = JSON.parse(run(`apigeetool listdeployments ${apigeeCliCreds} -e ${apigeeEnvironment} -j`));
   const matches = liveDeployments.deployments.filter((cdict) => cdict.name === proxyName);
   const fileName = proxyName;
@@ -31,36 +32,67 @@ function sync() {
   }
   var proxyZip = run(`apigeetool fetchproxy ${apigeeCliCreds} -n ${proxyName} -r ${proxyRevision}`);
 
-  fs.writeFile(fileName, proxyZip, (error) => {
+
+  // fs.writeFile(fileName, proxyZip, (error) => {
+  //   if (error) {
+  //     console.error(`Error writing file: ${error}`);
+  //     return;
+  //   }
+  // });
+
+  // fs.writeFile(terraform_file_path, "", (error) => {
+  //   if (error) {
+  //     console.error(`Error writing file: ${error}`);
+  //     return;
+  //   }
+  // });
+
+  // const f = fs.openSync(terraform_file_path, 'w');
+  // fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
+  // fs.writeSync(f, `  name = "${proxyName}"\n`);
+  // fs.writeSync(f, `  bundle = "${fileName}.zip"\n`);
+  // fs.writeSync(f, `  bundle_hash = "${bundle_hash}"\n`);
+  // fs.writeSync(f, `}\n`);
+  // fs.writeSync(f, `\n`);
+  // fs.writeSync(f, `resource "apigee_proxy_deployment" "${proxyName}_deployment" {\n`);
+  // fs.writeSync(f, `  proxy_name = apigee_proxy.${proxyName}.name\n`);
+  // fs.writeSync(f, `  environment_name = var.APIGEE_ENV\n`);
+  // fs.writeSync(f, `  revision = apigee_proxy.${proxyName}.revision\n`);
+  // fs.writeSync(f, `}\n`);
+  // fs.closeSync(f);
+
+  fs.mkdir(directoryPath, { recursive: true }, (error) => {
     if (error) {
-      console.error(`Error writing file: ${error}`);
+      console.error(`Error creating directory: ${error}`);
       return;
     }
+    fs.writeFile(fileName, proxyZip, (error) => {
+      if (error) {
+        console.error(`Error writing file: ${error}`);
+        return;
+      }
+    });
+    fs.writeFile(terraform_file_path, "", (error) => {
+      if (error) {
+        console.error(`Error writing file: ${error}`);
+        return;
+      }
+    });
+    const f = fs.openSync(terraform_file_path, 'w');
+    fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
+    fs.writeSync(f, `  name = "${proxyName}"\n`);
+    fs.writeSync(f, `  bundle = "${fileName}.zip"\n`);
+    fs.writeSync(f, `  bundle_hash = "${bundle_hash}"\n`);
+    fs.writeSync(f, `}\n`);
+    fs.writeSync(f, `\n`);
+    fs.writeSync(f, `resource "apigee_proxy_deployment" "${proxyName}_deployment" {\n`);
+    fs.writeSync(f, `  proxy_name = apigee_proxy.${proxyName}.name\n`);
+    fs.writeSync(f, `  environment_name = var.APIGEE_ENV\n`);
+    fs.writeSync(f, `  revision = apigee_proxy.${proxyName}.revision\n`);
+    fs.writeSync(f, `}\n`);
+    fs.closeSync(f);
+
   });
-
-  fs.writeFile(terraform_file_path, "",(error) => {
-    if (error) {
-      console.error(`Error writing file: ${error}`);
-      return;
-    }
-  });
-
-  const f = fs.openSync(terraform_file_path, 'w');
-  fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
-  fs.writeSync(f, `  name = "${proxyName}"\n`);
-  fs.writeSync(f, `  bundle = "${fileName}.zip"\n`);
-  fs.writeSync(f, `  bundle_hash = "${bundle_hash}"\n`);
-  fs.writeSync(f, `}\n`);
-  fs.writeSync(f, `\n`);
-  fs.writeSync(f, `resource "apigee_proxy_deployment" "${proxyName}_deployment" {\n`);
-  fs.writeSync(f, `  proxy_name = apigee_proxy.${proxyName}.name\n`);
-  fs.writeSync(f, `  environment_name = var.APIGEE_ENV\n`);
-  fs.writeSync(f, `  revision = apigee_proxy.${proxyName}.revision\n`);
-  fs.writeSync(f, `}\n`);
-  fs.closeSync(f);
-
-
-   
 
 }
 
