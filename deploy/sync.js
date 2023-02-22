@@ -16,7 +16,7 @@ const apigeeCliCreds = `-u ${apigeeUser} -p ${apigeePassword} -o ${apigeeOrganiz
 const proxyName = process.env.PROXY_NAME;
 const proxyRevision = process.env.PROXY_REVISION;
 const terraform_file_path = proxyName + '.tf';
-const directoryPath = "./terraform"
+const directoryPath = "./terraform/"
 function run(cmd) {
   return execSync(cmd, { encoding: 'utf8' });
 }
@@ -66,14 +66,20 @@ function sync() {
       console.error(`Error creating directory: ${error}`);
       return;
     }
-    
-    fs.writeFile(directoryPath+'/'+terraform_file_path, "", (error) => {
+    fs.writeFile(directoryPath+fileName, proxyZip, (error) => {
       if (error) {
         console.error(`Error writing file: ${error}`);
         return;
       }
     });
-    const f = fs.openSync(directoryPath+'/'+terraform_file_path, 'w');
+    
+    fs.writeFile(directoryPath+terraform_file_path, "", (error) => {
+      if (error) {
+        console.error(`Error writing file: ${error}`);
+        return;
+      }
+    });
+    const f = fs.openSync(directoryPath+terraform_file_path, 'w');
     fs.writeSync(f, `resource "apigee_proxy" "${proxyName}" {\n`);
     fs.writeSync(f, `  name = "${proxyName}"\n`);
     fs.writeSync(f, `  bundle = "${fileName}.zip"\n`);
@@ -89,12 +95,7 @@ function sync() {
 
   });
 
-  fs.writeFileSync(directoryPath+'/'+fileName, proxyZip, (error) => {
-    if (error) {
-      console.error(`Error writing file: ${error}`);
-      return;
-    }
-  });
+  
 
 }
 
