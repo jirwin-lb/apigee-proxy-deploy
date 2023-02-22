@@ -89,7 +89,7 @@ function sync() {
 
   });
 
-  fs.writeFile(directoryPath+'/'+fileName, proxyZip, (error) => {
+  fs.writeFileSync(directoryPath+'/'+fileName, proxyZip, (error) => {
     if (error) {
       console.error(`Error writing file: ${error}`);
       return;
