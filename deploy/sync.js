@@ -84,7 +84,7 @@ function sync() {
     fs.writeSync(f, `  name = "${proxyName}"\n`);
     fs.writeSync(f, `  bundle = "${fileName}.zip"\n`);
     fs.writeSync(f, `  bundle_hash = "${bundle_hash}"\n`);
-    fs.writeSync(f, `  revision = "${proxyRevision}"\n`);
+    fs.writeSync(f, `  revision = ${proxyRevision}\n`);
     fs.writeSync(f, `}\n`);
     fs.writeSync(f, `\n`);
     fs.writeSync(f, `resource "apigee_proxy_deployment" "${proxyName}_deployment" {\n`);
