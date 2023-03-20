@@ -89,7 +89,7 @@ function sync() {
     fs.writeSync(f, `resource "apigee_proxy_deployment" "${proxyName}_deployment" {\n`);
     fs.writeSync(f, `  proxy_name = apigee_proxy.${proxyName}.name\n`);
     fs.writeSync(f, `  environment_name = var.APIGEE_ENV\n`);
-    fs.writeSync(f, `  revision = apigee_proxy.${proxyName}.${proxyRevision}\n`);
+    fs.writeSync(f, `  revision = ${proxyRevision}\n`);
     fs.writeSync(f, `}\n`);
     fs.closeSync(f);
 
